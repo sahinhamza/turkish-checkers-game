@@ -1,0 +1,98 @@
+body {
+    margin: 0px;
+    user-select: none;
+}
+
+.App {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    height: 100vh;
+
+    .checkers-board {
+        background-color: #fff;
+        width: 320px;
+        height: 320px;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        grid-auto-flow: row;
+        margin: 20px;
+    }
+
+    .checkers-field-dark {
+        background: rgb(0, 183, 255);
+    }
+
+    .checkers-field-light {
+        background: burlywood;
+    }
+
+    .checkers-field-highlight {
+        background: gold;
+    }
+
+    .checkers-piece {
+        position: relative;
+        top: 5%;
+        left: 5%;
+        width: 80%;
+        height: 80%;
+        border-radius: 100%;
+        &:after{
+            content: "";
+            position: absolute;
+            top:25%;
+            left:25%;
+            height: 50%;
+            width: 50%;
+            border-radius: 100%;
+
+        }
+    }
+
+    @mixin piece() {
+        border: 2px solid black;
+        cursor: grab;
+        &:hover {
+            background: gold;
+        }
+
+    }
+
+    .checkers-piece-blue {
+        background: blue;
+        @include piece();
+    }
+
+    .checkers-piece-blue-dama{
+        background: blue;
+        @include piece();
+        &:after{
+            background-color: #fff;
+        }
+    }
+
+    .checkers-piece-red {
+        background: red;
+        @include piece();
+    }
+
+    .checkers-piece-red-dama {
+        background: red;
+        @include piece();
+        &:after{
+            background-color:black;
+        }
+    }
+    
+    .checkers-piece-selected,
+    .checkers-piece-selected-dama {
+        background: gold;
+        border: 2px solid gold;
+    }
+
+}

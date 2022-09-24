@@ -1,13 +1,95 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0px;
+  user-select: none;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.App {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  height: 100vh;
 }
+.App .checkers-board {
+  background-color: #fff;
+  width: 320px;
+  height: 320px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  grid-auto-flow: row;
+  margin: 20px;
+}
+.App .checkers-field-dark {
+  background: rgb(0, 183, 255);
+}
+.App .checkers-field-light {
+  background: burlywood;
+}
+.App .checkers-field-highlight {
+  background: gold;
+}
+.App .checkers-piece {
+  position: relative;
+  top: 5%;
+  left: 5%;
+  width: 80%;
+  height: 80%;
+  border-radius: 100%;
+}
+.App .checkers-piece:after {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  height: 50%;
+  width: 50%;
+  border-radius: 100%;
+}
+.App .checkers-piece-blue {
+  background: blue;
+  border: 2px solid black;
+  cursor: grab;
+}
+.App .checkers-piece-blue:hover {
+  background: gold;
+}
+.App .checkers-piece-blue-dama {
+  background: blue;
+  border: 2px solid black;
+  cursor: grab;
+}
+.App .checkers-piece-blue-dama:hover {
+  background: gold;
+}
+.App .checkers-piece-blue-dama:after {
+  background-color: #fff;
+}
+.App .checkers-piece-red {
+  background: red;
+  border: 2px solid black;
+  cursor: grab;
+}
+.App .checkers-piece-red:hover {
+  background: gold;
+}
+.App .checkers-piece-red-dama {
+  background: red;
+  border: 2px solid black;
+  cursor: grab;
+}
+.App .checkers-piece-red-dama:hover {
+  background: gold;
+}
+.App .checkers-piece-red-dama:after {
+  background-color: black;
+}
+.App .checkers-piece-selected,
+.App .checkers-piece-selected-dama {
+  background: gold;
+  border: 2px solid gold;
+}
+
+/*# sourceMappingURL=index.css.map */
