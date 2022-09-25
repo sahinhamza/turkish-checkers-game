@@ -31,6 +31,9 @@ body {
 .App .checkers-field-highlight {
   background: gold;
 }
+.App .checkers-field-highlight:hover {
+  border: 2px solid black;
+}
 .App .checkers-piece {
   position: relative;
   top: 5%;
@@ -89,7 +92,7 @@ body {
 .App .checkers-piece-selected,
 .App .checkers-piece-selected-dama {
   background: gold;
-  border: 2px solid gold;
+  border: 2px solid black;
 }
 
 /*# sourceMappingURL=index.css.map */

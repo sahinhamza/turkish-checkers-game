@@ -33,6 +33,9 @@ body {
 
     .checkers-field-highlight {
         background: gold;
+        &:hover{
+            border: 2px solid black;
+        }
     }
 
     .checkers-piece {
@@ -91,8 +94,9 @@ body {
     
     .checkers-piece-selected,
     .checkers-piece-selected-dama {
+       
         background: gold;
-        border: 2px solid gold;
+        border: 2px solid black;
     }
 
 }

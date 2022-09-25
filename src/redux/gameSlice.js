@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// CREATE GAME TABLE
 const Board = function () {
     let cells = []
     for (let row = 0; row < 8; row++) {
@@ -14,6 +15,7 @@ const Board = function () {
     return cells
 }
 
+// CREATE PİECES
 const Pieces = Board().map(item => {
     if (item.row === 1 || item.row === 2) {
         return { ...item, "color": "red" }
@@ -24,6 +26,7 @@ const Pieces = Board().map(item => {
     }
 })
 
+//CELL BACKROUND
 const backroundColor = function (item) {
     if ((item.row + item.col) % 2) {
         return { ...item, "backround": "dark" }
@@ -67,7 +70,7 @@ export const gameSlice = createSlice({
                     let damaRow = state.selected.item.row;
                     let damaCol = state.selected.item.col;
 
-
+                    // CHECK FOR IF THERE İS  A POSSİBLE ATTACK
                     for (let i = 1; i < 7 - damaRow; i++) {
                         if (state.pieces[8 * (damaRow + i) + damaCol].color === otherColor) {
                             if (!state.pieces[8 * (damaRow + i + 1) + damaCol].color) {
@@ -90,8 +93,6 @@ export const gameSlice = createSlice({
                             break
                         }
                     }
-
-
                     for (let i = 1; i < 7 - damaCol; i++) {
                         if (state.pieces[8 * damaRow + damaCol + i].color === otherColor) {
                             if (!state.pieces[8 * damaRow + damaCol + i + 1].color) {
@@ -114,6 +115,8 @@ export const gameSlice = createSlice({
                             break
                         }
                     }
+
+                    // ATTACK STATUS
                     if (checkForUp || checkForDown || checkForRight || checkForLeft) {
                         state.pieces = state.pieces.map(piece => (backroundColor(piece)));
                         if (checkForUp) {
@@ -185,9 +188,12 @@ export const gameSlice = createSlice({
                     }
                 } else {
                     const possibleRow = state.turn === "blue" ? -8 : 8;
-                    const checkForRow = (state.pieces[index + possibleRow]?.color === otherColor && !state.pieces[index + possibleRow * 2].color) ? true : false;
-                    const checkForColumnPlus = (state.pieces[index + 1]?.color === otherColor && !state.pieces[index + 2].color && state.pieces[index + 2].row === item.row) ? true : false;
-                    const checkForColumnMinus = (state.pieces[index - 1]?.color === otherColor && !state.pieces[index - 2].color && state.pieces[index - 2].row === item.row) ? true : false;
+                    const checkForRow = (state.pieces[index + possibleRow]?.color === otherColor &&
+                        !state.pieces[index + possibleRow * 2].color) ? true : false;
+                    const checkForColumnPlus = (state.pieces[index + 1]?.color === otherColor &&
+                        !state.pieces[index + 2].color && state.pieces[index + 2].row === item.row) ? true : false;
+                    const checkForColumnMinus = (state.pieces[index - 1]?.color === otherColor &&
+                        !state.pieces[index - 2].color && state.pieces[index - 2].row === item.row) ? true : false;
 
                     state.pieces = state.pieces.map(piece => (backroundColor(piece)))
                     if (checkForRow || checkForColumnPlus || checkForColumnMinus) {
@@ -223,10 +229,11 @@ export const gameSlice = createSlice({
             const otherColor = state.turn === "blue" ? "red" : "blue";
             if (item.backround === "highlight") {
                 if (state.selected.item.dama) {
-                    state.pieces[index] = { ...state.pieces[index], "color": state.turn, "dama": true }
+                    state.pieces[index] = { ...state.pieces[index], "color": "selected", "dama": true }
                     state.pieces[state.selected.index] = { ...state.pieces[state.selected.index], "color": "", "dama": false }
-                  
+
                     state.pieces = state.pieces.map(piece => backroundColor(piece));
+                    // CLEAR ENEMY PİECE
                     if (Math.abs(index - state.selected.index) > 15) {
                         for (let i = Math.min(state.selected.index, index) + 8; i < Math.max(state.selected.index, index); i += 8) {
                             if (state.pieces[i].color) {
@@ -243,9 +250,9 @@ export const gameSlice = createSlice({
                             }
                         }
                     }
-                   
+                    // CHECK FOR THE OTHERS ENEMY PİECE
                     if (state.unchangeable) {
-                    
+
                         let checkForUp = false;
                         let checkForDown = false;
                         let checkForRight = false;
@@ -301,6 +308,7 @@ export const gameSlice = createSlice({
                             }
                         }
                         if (checkForUp || checkForDown || checkForRight || checkForLeft) {
+                            state.pieces = state.pieces.map(piece => backroundColor(piece));
                             if (checkForUp) {
                                 for (let i = 0; i <= 7 - checkForUp; i++) {
                                     if (!state.pieces[(checkForUp + i) * 8 + damaCol].color) {
@@ -337,14 +345,15 @@ export const gameSlice = createSlice({
                                     }
                                 }
                             }
-                            state.selected = {index:index,item:{...state.pieces[index],"dama":true}}
+                            state.selected = { index: index, item: { ...state.pieces[index], "dama": true } }
                         } else {
+                            state.pieces[index].color = state.turn
                             state.unchangeable = false
                             state.turn = otherColor
                             state.selected = null
                         }
                     } else {
-                     
+                        state.pieces[index].color = state.turn
                         state.turn = otherColor
                         state.selected = null
                     }
@@ -352,6 +361,7 @@ export const gameSlice = createSlice({
                 } else {
 
                     const indexGap = state.selected.index - index;
+                    // TRANSFORMATION DAMA
                     if (state.turn === "blue" && item.row === 0) {
                         state.pieces[index] = { ...state.pieces[index], "dama": true }
                         state.pieces = state.pieces.map(piece => backroundColor(piece))
@@ -359,23 +369,25 @@ export const gameSlice = createSlice({
                         state.pieces[index] = { ...state.pieces[index], "dama": true }
                         state.pieces = state.pieces.map(piece => backroundColor(piece))
                     }
+                  // CHECK FOR THE OTHERS ENEMY PİECE
                     if (indexGap === -possibleRow || Math.abs(indexGap) === 1) {
                         state.pieces[index] = { ...state.pieces[index], "color": state.turn, "backround": `${color}` };
                         state.pieces[state.selected.index] = { ...state.pieces[state.selected.index], "color": "" };
-                        [-1, 1, possibleRow].forEach(num => (
-                            state.pieces[state.selected.index + num] = { ...state.pieces[state.selected.index + num], "backround": `${(state.pieces[state.selected.index + num].row + state.pieces[state.selected.index + num].col) % 2 ? "dark" : "light"}` }
-                        ))
+                        state.pieces = state.pieces.map(piece => backroundColor(piece));
                         state.selected = null
                         state.turn = otherColor;
                     } else {
-                        state.pieces[(index + state.selected.index) / 2] = { ...state.pieces[(index + state.selected.index) / 2], "color": "" ,"dama":false};
+                        state.pieces[(index + state.selected.index) / 2] = { ...state.pieces[(index + state.selected.index) / 2], "color": "", "dama": false };
                         state.pieces[state.selected.index] = { ...state.pieces[state.selected.index], "color": "" };
                         state.unchangeable = true
                         state.selected = action.payload;
-                        const checkForRow = (state.pieces[index + possibleRow]?.color === otherColor && !state.pieces[index + possibleRow * 2].color) ? true : false;
-                        const checkForColumnPlus = (state.pieces[index + 1]?.color === otherColor && !state.pieces[index + 2].color && state.pieces[index + 2].row === item.row) ? true : false;
-                        const checkForColumnMinus = (state.pieces[index - 1]?.color === otherColor && !state.pieces[index - 2].color && state.pieces[index - 2].row === item.row) ? true : false;
-
+                          
+                        const checkForRow = (state.pieces[index + possibleRow]?.color === otherColor && 
+                            !state.pieces[index + possibleRow * 2].color) ? true : false;
+                        const checkForColumnPlus = (state.pieces[index + 1]?.color === otherColor && 
+                            !state.pieces[index + 2].color && state.pieces[index + 2].row === item.row) ? true : false;
+                        const checkForColumnMinus = (state.pieces[index - 1]?.color === otherColor && 
+                            !state.pieces[index - 2].color && state.pieces[index - 2].row === item.row) ? true : false;
                         if (checkForRow || checkForColumnPlus || checkForColumnMinus) {
                             state.pieces = state.pieces.map(piece => backroundColor(piece))
                             if (checkForRow) {
