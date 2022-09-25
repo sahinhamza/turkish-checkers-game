@@ -9,18 +9,26 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: gray;
+  background-color: darkgray;
   height: 100vh;
+  overflow-x: hidden !important;
+}
+.App button {
+  background: cadetblue;
+  cursor: pointer;
+  color: black;
+  padding: 2px 5px;
 }
 .App .checkers-board {
   background-color: #fff;
-  width: 320px;
-  height: 320px;
+  width: 400px;
+  height: 400px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
   grid-auto-flow: row;
   margin: 20px;
+  border: 15px solid #345;
 }
 .App .checkers-field-dark {
   background: rgb(0, 183, 255);
@@ -30,17 +38,37 @@ body {
 }
 .App .checkers-field-highlight {
   background: gold;
+  border: 3px outset ghostwhite;
+  cursor: pointer;
 }
 .App .checkers-field-highlight:hover {
-  border: 2px solid black;
+  background: rgba(20, 17, 1, 0.712);
+}
+@keyframes scaleplus {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+@keyframes trace {
+  from {
+    background-color: rgba(0, 0, 0, 0.507);
+  }
+  to {
+    background-color: "";
+  }
 }
 .App .checkers-piece {
   position: relative;
-  top: 5%;
-  left: 5%;
-  width: 80%;
-  height: 80%;
+  top: 10%;
+  left: 10%;
+  width: 70%;
+  height: 70%;
   border-radius: 100%;
+  animation-name: trace;
+  animation-duration: 1s;
 }
 .App .checkers-piece:after {
   content: "";
@@ -55,6 +83,8 @@ body {
   background: blue;
   border: 2px solid black;
   cursor: grab;
+  animation-name: scaleplus;
+  animation-duration: 0.5s;
 }
 .App .checkers-piece-blue:hover {
   background: gold;
@@ -63,6 +93,8 @@ body {
   background: blue;
   border: 2px solid black;
   cursor: grab;
+  animation-name: scaleplus;
+  animation-duration: 0.5s;
 }
 .App .checkers-piece-blue-dama:hover {
   background: gold;
@@ -74,6 +106,8 @@ body {
   background: red;
   border: 2px solid black;
   cursor: grab;
+  animation-name: scaleplus;
+  animation-duration: 0.5s;
 }
 .App .checkers-piece-red:hover {
   background: gold;
@@ -82,6 +116,8 @@ body {
   background: red;
   border: 2px solid black;
   cursor: grab;
+  animation-name: scaleplus;
+  animation-duration: 0.5s;
 }
 .App .checkers-piece-red-dama:hover {
   background: gold;
@@ -93,6 +129,23 @@ body {
 .App .checkers-piece-selected-dama {
   background: gold;
   border: 2px solid black;
+  animation-name: scaleplus;
+  animation-duration: 0.5s;
+  cursor: grab;
+}
+@media (max-width: 480px) {
+  .App .checkers-board {
+    width: 320px;
+    height: 320px;
+  }
+  .App .checkers-piece-blue:hover,
+.App .checkers-piece-blue-dama:hover {
+    background: blue;
+  }
+  .App .checkers-piece-red:hover,
+.App .checkers-piece-red-dama:hover {
+    background: red;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

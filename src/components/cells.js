@@ -1,22 +1,16 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { playerMoveClick, possibleMoves, move } from "../redux/gameSlice";
 
 export function Cells({ item, index }) {
-    const selected = useSelector(state => state.game.selected)
     const dispatch = useDispatch();
 
     const clickHandler = () => {
         dispatch(playerMoveClick({ index, item }));
         dispatch(possibleMoves({ index, item }));
         dispatch(move({ index, item }));
-        console.log(selected)
     }
-   
-
     return (
-        <div
-            className={`checkers-field-${item.backround}`}
-        >
+        <div className={`checkers-field-${item.backround}`}>
             <div className={
                 item.color ?
                     item.dama ?
@@ -26,7 +20,6 @@ export function Cells({ item, index }) {
             }
                 onClick={() => clickHandler()}
             />
-
         </div>
     );
 }

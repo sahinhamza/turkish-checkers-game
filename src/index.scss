@@ -9,18 +9,27 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: gray;
+    background-color: darkgray;
     height: 100vh;
+    overflow-x: hidden !important;
+
+    button {
+        background: cadetblue;
+        cursor: pointer;
+        color: black;
+        padding: 2px 5px;
+    }
 
     .checkers-board {
         background-color: #fff;
-        width: 320px;
-        height: 320px;
+        width: 400px;
+        height: 400px;
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         grid-template-rows: repeat(8, 1fr);
         grid-auto-flow: row;
         margin: 20px;
+        border: 15px solid #345;
     }
 
     .checkers-field-dark {
@@ -33,37 +42,65 @@ body {
 
     .checkers-field-highlight {
         background: gold;
-        &:hover{
-            border: 2px solid black;
+        border: 3px outset ghostwhite;
+
+        &:hover {
+            background: rgba(20, 17, 1, 0.712);
+        }
+
+        cursor: pointer;
+    }
+
+    @keyframes scaleplus {
+        from {
+            scale: 0;
+        }
+
+        to {
+            scale: 1;
+        }
+    }
+
+    @keyframes trace {
+        from {
+            background-color: rgba(0, 0, 0, 0.507);
+        }
+
+        to {
+            background-color: "";
         }
     }
 
     .checkers-piece {
         position: relative;
-        top: 5%;
-        left: 5%;
-        width: 80%;
-        height: 80%;
+        top: 10%;
+        left: 10%;
+        width: 70%;
+        height: 70%;
         border-radius: 100%;
-        &:after{
+        animation-name: trace;
+        animation-duration: 1s;
+
+        &:after {
             content: "";
             position: absolute;
-            top:25%;
-            left:25%;
+            top: 25%;
+            left: 25%;
             height: 50%;
             width: 50%;
             border-radius: 100%;
-
         }
     }
 
     @mixin piece() {
         border: 2px solid black;
         cursor: grab;
+        animation-name: scaleplus;
+        animation-duration: 0.5s;
+
         &:hover {
             background: gold;
         }
-
     }
 
     .checkers-piece-blue {
@@ -71,10 +108,11 @@ body {
         @include piece();
     }
 
-    .checkers-piece-blue-dama{
+    .checkers-piece-blue-dama {
         background: blue;
         @include piece();
-        &:after{
+
+        &:after {
             background-color: #fff;
         }
     }
@@ -87,16 +125,40 @@ body {
     .checkers-piece-red-dama {
         background: red;
         @include piece();
-        &:after{
-            background-color:black;
+
+        &:after {
+            background-color: black;
         }
     }
-    
+
     .checkers-piece-selected,
     .checkers-piece-selected-dama {
-       
         background: gold;
         border: 2px solid black;
+        animation-name: scaleplus;
+        animation-duration: 0.5s;
+        cursor: grab;
+    }
+
+    @media (max-width:480px) {
+        .checkers-board {
+            width: 320px;
+            height: 320px;
+        }
+
+        .checkers-piece-blue,
+        .checkers-piece-blue-dama {
+            &:hover {
+                background: blue;
+            }
+        }
+
+        .checkers-piece-red,
+        .checkers-piece-red-dama {
+            &:hover {
+                background: red;
+            }
+        }
     }
 
 }
